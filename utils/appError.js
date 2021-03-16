@@ -1,8 +1,10 @@
 /**
- * Creating an error class so as to pass it down the
- * global error handling function and only handling majorlys
- * error that we predict will occur i.e isOperational errors
- * as against Programming Errors
+ * @file This file handles all API errors and Creating an error class so as to pass it down the
+ * global error handling function and only handling majorlys error that we predict will occur
+ * i.e isOperational errors as against Programming Errors
+ * @author Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 08:32pm>
+ * @since 1.0.0
+ * Last Modified: Ayoyimika <ajibadeayoyimika@gmail.com> <02/01/2021 06:59am>
  */
 class AppError extends Error {
   constructor(message, statusCode) {

@@ -1,3 +1,12 @@
+/**
+ * @file recieves' the error from the app and functions, setting up the response
+ * objects if the environments is developments and passing it down to the
+ * global error handlers middleware for further processing
+ * @author Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 1:37am>
+ * @since 0.1.0
+ * Last Modified: Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 1:37am>
+ */
+
 const AppError = require('./../utils/appError');
 
 const sendErrorDev = (err, res) => {
