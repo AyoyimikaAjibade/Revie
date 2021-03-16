@@ -1,0 +1,12 @@
+# VsCode Config Files
+.vscode/
+
+# Dependency Directories
+node_modules/
+
+.idea/workspace.xml
+
+.cache/
+
+#  Config development environments
+*.env
