@@ -40,8 +40,9 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'User'],
-    default: 'User',
+    enum: ['admin', 'user', 'guestUser'],
+    default: 'user',
+    message: 'The role of user is either an admin, user or a guest user',
   },
   photo: String,
   password: {

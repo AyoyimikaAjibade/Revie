@@ -12,6 +12,7 @@ const dotenv = require('dotenv');
 
 // log error to the console for debugging purpose
 process.on('uncaughtException', (err) => {
+  console.log(err);
   console.log('UNCAUGHT EXCEPTION! 💥Shutting down...');
   console.log(err.name, err.message);
 });

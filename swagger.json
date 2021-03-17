@@ -170,7 +170,7 @@
                 },
                 "requestBody": {
                     "content": {
-                        "application.json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/createUserReq"
                             }
@@ -257,7 +257,7 @@
                 },
                 "requestBody": {
                     "content": {
-                        "application.json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/userLoginReq"
                             }
@@ -306,7 +306,7 @@
                 },
                 "requestBody": {
                     "content": {
-                        "application.json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/createUserReq"
                             }
@@ -393,7 +393,7 @@
                 },
                 "requestBody": {
                     "content": {
-                        "application.json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/updateUserReq"
                             }
@@ -429,35 +429,33 @@
                 "properties": {
                     "token": {
                         "type":"string",
-                        "description": "User access token."
+                        "description": "User access token.",
+                        "example":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTA3NjIyZDBhOTdlMjk3Yzg5ZGI1YSIsImlhdCI6MTYxNTkzNDkwNCwiZXhwIjoxNjIzNzEwOTA0fQ.b5mmqUzTRntS0tdT2TnFyKpm8yHUafQTBOTjItz92LQ"
                     },
                     "_id": {
                         "type": "string",
-                        "description": "User Id"
+                        "description": "User Id",
+                        "example":"6050762240a97e296c89db5a"
                     },
                     "name": {
                         "type": "string",
-                        "description": "user's full name"
+                        "description": "user's full name",
+                        "example":"Burna Boy"
                     },
                     "email": {
                         "type": "string",
-                        "description": "user's email"
+                        "description": "user's email",
+                        "example":"burnaboy@gmail.io"
                     },
                     "photo": {
                         "type": "string",
-                        "description": "user's profile picture"
+                        "description": "user's profile picture",
+                        "example":"https://f0.pngfuel.com/png/340/956/profile-user-icon-png-clip-art-thumbnail.png"
                     },
                     "role": {
                         "type": "string",
-                        "description": "user's role"
-                    },
-                    "example":{
-                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTA3NjIyZDBhOTdlMjk3Yzg5ZGI1YSIsImlhdCI6MTYxNTkzNDkwNCwiZXhwIjoxNjIzNzEwOTA0fQ.b5mmqUzTRntS0tdT2TnFyKpm8yHUafQTBOTjItz92LQ",
-                        "_id":"6050762240a97e296c89db5a",
-                        "role":"user",
-                        "name":"Burna Boy",
-                        "email":"burnaboy@gmail.io",
-                        "photo":"https://f0.pngfuel.com/png/340/956/profile-user-icon-png-clip-art-thumbnail.png"
+                        "description": "user's role",
+                        "example":"user"
                     }
                 
                 },
@@ -536,11 +534,13 @@
                 "properties": {
                     "email": {
                         "type": "string",
-                        "description": "User email"
+                        "description": "User email",
+                        "example":"burnaboy@gmail.io"
                     },
                     "password": {
                         "type": "string",
-                        "description": "User password"
+                        "description": "User password",
+                        "example":"burna1234"
                     }
                 },
                 "xml": {

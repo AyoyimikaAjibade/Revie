@@ -22,7 +22,11 @@ router.post('/login', authController.login);
 router.use(authController.protect);
 
 router.get('/me', userController.getMe, userController.getUser);
-router.patch('/updateMe', userController.updateMe);
+router.patch(
+  '/updateMe',
+  userController.uploadUserPhoto,
+  userController.updateMe
+);
 
 // Restrict the manipulation of this routes resources for the admin alone
 router.use(authController.restrictTo('admin'));
