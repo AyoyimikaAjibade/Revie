@@ -19,10 +19,17 @@ const hpp = require('hpp');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRoutes');
-const docs = require('./routes/documentations');
+
+const swaggerUi = require('swagger-ui-express'),
+  swaggerDocument = require('./swagger.json');
+
 const app = express();
 
 //GLOBAL  MIDDLEWARES
+
+//Serving Static files
+// app.use(express.static(path.join(__dirname, 'uploads')));
+
 /**
  * a middleware to log out request informations on the terminal with
  *  info like requested route, size of response, time to get response e.t.c
@@ -59,8 +66,9 @@ app.use(xss());
  * Adds application routes middleware from the documentations, userRoutes
  * and reviewRoutes index which groups all routes together
  */
-app.use('/docs', docs);
+// app.use('/docs', docs);
 app.use('/api/v1/users', userRouter);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /**
  * EXPLANATION OF UNHANDLED ROUTES HANDLERS
