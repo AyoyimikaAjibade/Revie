@@ -195,7 +195,7 @@
                     "description": "An id associated with a user"
                 }],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "User Succesfully deleted"
                     },
                     "400": {
@@ -403,6 +403,290 @@
                     "required": true
                 }
             }
+        },
+        "api/v1/reviews":{
+            "get": {
+                "tags": ["Review"],
+                "summary": "Retrieving all reviews in database",
+                "description": "All created review will be retreived",
+                "operationId": "getAllReviews",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getReviewRes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Review"],
+                "summary": "Create Review",
+                "description": "A review is be created by the user if all required details are provided",
+                "operationId": "CreateReview",
+                "responses": {
+                    "200": {
+                        "description": "Review created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getReviewRes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createReviewReq"
+                            }
+                        }
+                    },
+                    "description": "Input the required data for siging user into Revie",
+                    "required": true
+                }
+            }
+        },
+        "api/v1/reviews/:id":{
+            "get": {
+                "tags": ["Review"],
+                "summary": "Fetch Review Data",
+                "description": "The data related to the review id provided will be returned",
+                "operationId": "getReviewById",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string"
+                    },
+                    "description": "An id associated with a review"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Review data fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getReviewRes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Review"],
+                "summary": "User or Admin will modifying the data of a review using the provided data and id",
+                "description": "A user or admin only will modifying the data of a review using the provided data and id",
+                "operationId": "updateReview",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema":{
+                        "type": "string"
+                    },
+                    "required": true,
+                    "description": "An id associated with a review"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Review Succesfully Updated!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getReviewRes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createReviewReq"
+                            }
+                        }
+                    },
+                    "description": "The user will provide the review the ratings, images, category, e.t.c when updating the review.",
+                    "required": true
+                }
+            },
+            "delete": {
+                "tags": ["Review"],
+                "summary": "User will be able to delete a particular review",
+                "description": "User will be able to delete a particular review if deemed inappropriate.",
+                "operationId": "deleteReview",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema":{
+                        "type": "string"
+                    },
+                    "required": true,
+                    "description": "An id associated with a review"
+                }],
+                "responses": {
+                    "204": {
+                        "description": "Reveiw Succesfully deleted"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                }
+            }
+        },
+        "api/v1/reviews/mark-as-helpful/:id":{
+            "put": {
+                "tags": ["Review"],
+                "summary": "User or Guest User will modifying the data of a review using the provided data and id",
+                "description": "A user or guestUser only will modifying the review property 'helpful' to either true or false using the provided data and id",
+                "operationId": "updateReview",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema":{
+                        "type": "string"
+                    },
+                    "required": true,
+                    "description": "An id associated with a review"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Review Succesfully Marked as helpful!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getReviewRes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal error"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/markReviewReq"
+                            }
+                        }
+                    },
+                    "description": "The user will provide the review the ratings, images, category, e.t.c when updating the review.",
+                    "required": true
+                }
+            }
         }
     },
     "servers": [
@@ -411,7 +695,7 @@
             "description": "Local server"
         },
         {   
-            "url": "https://revie.herokuapp.com/docs",
+            "url": "https://reviee.herokuapp.com/docs",
             "description": "Production server"
         }
       ],
@@ -527,6 +811,58 @@
                     "name": "getUserRes"
                 }
             },
+            "getReviewRes": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Review Id"
+                    },
+                    "review": {
+                        "type": "string",
+                        "description": "The Review Text"
+                    },
+                    "rating": {
+                        "type": "number",
+                        "description": "Review ratings minimum of 0.0 and maximum of 5.0"
+                    },
+                    "images": {
+                        "type": "string",
+                        "description": "review images max of 3"
+                    },
+                    "video": {
+                        "type": "string",
+                        "description": "review Video max 1"
+                    },
+                    "helpful": {
+                        "type": "boolean",
+                        "description": "Determine if a review is helpful to users"
+                    },
+                    "helpfulCount": {
+                        "type": "string",
+                        "description": "The total of helful if the user increase if select true or else decrease it"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "user's category i.e ['landlords', 'environments', 'qualityOfAmenities']"
+                    },
+                    "createdAt": {
+                        "type": "date",
+                        "description": "The date a review is created default to Date.now()"
+                    },
+                    "user": {
+                        "type": "string",
+                        "description": "review user"
+                    },
+                    "apartmentAddresse": {
+                        "type": "string",
+                        "description": "The location of the apartment that has review"
+                    }
+                },
+                "xml": {
+                    "name": "getReviewRes"
+                }
+            },
          
 
             "userLoginReq": {
@@ -591,6 +927,68 @@
                 "xml": {
                     "name": "getUserRes"
     
+                }
+            },
+            "createReviewReq":{
+                "type": "object",
+                "properties": {
+                    "review": {
+                        "type": "string",
+                        "description": "The Review Text"
+                    },
+                    "rating": {
+                        "type": "number",
+                        "description": "Review ratings minimum of 0.0 and maximum of 5.0"
+                    },
+                    "images": {
+                        "type": "string",
+                        "description": "review images max of 3"
+                    },
+                    "video": {
+                        "type": "string",
+                        "description": "review Video max 1"
+                    },
+                    "helpful": {
+                        "type": "boolean",
+                        "description": "Determine if a review is helpful to users"
+                    },
+                    "helpfulCount": {
+                        "type": "string",
+                        "description": "The total of helful if the user increase if select true or else decrease it"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "user's category i.e ['landlords', 'environments', 'qualityOfAmenities']"
+                    },
+                    "createdAt": {
+                        "type": "date",
+                        "description": "The date a review is created default to Date.now()"
+                    },
+                    "user": {
+                        "type": "string",
+                        "description": "review user"
+                    },
+                    "apartmentAddresse": {
+                        "type": "string",
+                        "description": "The location of the apartment that has review"
+                    }
+                },
+                "xml": {
+                    "name": "createUserRes"
+    
+                }
+            },
+            "markReviewReq":{
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "boolean",
+                        "description": "Update if user choice is either true or false",
+                        "example":"true"
+                    }
+                },
+                "xml": {
+                    "name": "markReviewReq"
                 }
             }
         }
