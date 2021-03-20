@@ -6,29 +6,31 @@ const authController = require('../controllers/authController');
  */
 const router = require('express').Router();
 
-router.put('/mark-as-helpful/:id', reviewController.markHelpFul);
+router.patch('/mark-as-helpful/:reviewId', reviewController.markHelpFul);
 
 router.use(authController.protect);
 router
   .route('/')
   .post(
     authController.restrictTo('user'),
-    reviewController.uploadReviewImages,
-    reviewController.uploadReviewVideo,
+    reviewController.uploadRevieMedia,
+    reviewController.saveMediaToDB,
     reviewController.setUserId,
     reviewController.createReview
   )
   .get(reviewController.getAllReviews);
 
 router
-  .route('/:id')
+  .route('/:reviewId')
   .delete(
     authController.restrictTo('user', 'admin'),
     reviewController.deleteReview
   )
-  .put(
+  .patch(
     authController.restrictTo('user', 'admin'),
+    reviewController.uploadRevieMedia,
+    reviewController.saveMediaToDB,
     reviewController.updateReview
   )
-  .get(reviewController.getReview);
+  .get(authController.protect, reviewController.getReview);
 module.exports = router;
