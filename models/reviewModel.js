@@ -1,4 +1,25 @@
+/**
+ * @file This file defines the Review schema, creates methods, middlewares,
+ * instances available on the Review model functions and exports it as a model
+ * @author Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 10:02pm>
+ * @since 0.1.0
+ * Last Modified: Ayoyimika <ajibadeayoyimika@gmail.com> <30/12/2020 10:02pm>
+ */
+
 const mongoose = require('mongoose');
+/**
+ * @param {Object} Review - Schema that will be used to create the Review collection
+ * @param {String} Review.review - The review text
+ * @param {Number} Review.rating - The rating of the Review
+ * @param {Array} Review.images - The images of the Review
+ * @param {Array} Review.videos - The video of the Review
+ * @param {Boolean} Review.helpful - The helpful status of the Review
+ * @param {Number} Review.helpfulCount - The number of helpfulCount per a particular status of the Review
+ * @param {String} Review.category - The category of each Review
+ * @param {Date} Review.createdAt - The date a review is created
+ * @param {Object} Review.user - The user information of author of the review
+ * @param {String} Review.apartmentAddresse - The apartment location that has a review
+ **/
 
 const reviewSchema = new mongoose.Schema({
   review: {
@@ -38,7 +59,7 @@ const reviewSchema = new mongoose.Schema({
   user: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      ref: 'Review',
       required: [true, 'Review must belong to a user.'],
     },
   ],
@@ -53,19 +74,11 @@ reviewSchema.index({ createdAt: 1, helpfulCount: 1 });
 
 // assign a function to the "methods" object of our reviewSchema
 reviewSchema.methods.setHelpfulCount = function (cb) {
-  console.log('HELLO FROM INSTANCE METHODS!');
-
   if (this.helpful === true) {
     this.helpfulCount = ++this.helpfulCount;
-    // console.log(this.helpful);
-    // console.log(this.helpfulCount);
-    // console.log('true');
   }
   if (this.helpfulCount !== 0 && this.helpful === false) {
     this.helpfulCount = --this.helpfulCount;
-    // console.log(this.helpful);
-    // console.log(this.helpfulCount);
-    // console.log('false');
   }
 };
 
@@ -75,15 +88,14 @@ reviewSchema.pre('save', function (next) {
 });
 
 reviewSchema.pre('findOneAndUpdate', async function (next) {
-  console.log('HELLO FROM PRE find!');
   // The document that `findOneAndUpdate()` will modify
   const docToUpdate = await this.model.findOne(this.getQuery());
+
   //Another method of gaining access to the updated data before saving to database
   //this.docToUpdate = await this.findOne();
-  // console.log('PRE', docToUpdate);
+
   docToUpdate.setHelpfulCount();
-  //docToUpdate.save();
-  //console.log('POST', docToUpdate);
+  docToUpdate.save();
   next();
 });
 

@@ -1,13 +1,10 @@
 /**
  * @file This file defines the User schema, creates method, middlewares,
- * instances available on the User model
- *  functions and expprts it as a model
+ * instances available on the User model functions and exports it as a model
  * @author Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 10:02pm>
  * @since 0.1.0
  * Last Modified: Ayoyimika <ajibadeayoyimika@gmail.com> <30/12/2020 10:02pm>
  */
-
-const crypto = require('crypto');
 
 // mongodb framework
 const mongoose = require('mongoose');

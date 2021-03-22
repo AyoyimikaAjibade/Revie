@@ -1,8 +1,19 @@
+/**
+ * @file recieves' incoming authenticated client request send back the appropriate
+ * processed review data and resources solving business problems like checking if review is helpful,
+ * CRUD on all review resources and  passing it down to the routes
+ * @author Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 1:37am>
+ * @since 0.1.0
+ * Last Modified: Ayoyimika <ajibadeayoyimika@gmail.com> <16/03/2021 1:37am>
+ */
+
 const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const { filterObj1 } = require('./userController');
 const multer = require('multer');
 
+//Setting the multer storage path and dynamic filename when succesfully uploaded
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {
@@ -21,6 +32,7 @@ const multerStorage = multer.diskStorage({
   },
 });
 
+//Filtering incoming file to only accept images or video
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image') || file.mimetype.startsWith('video')) {
     cb(null, true);
@@ -34,19 +46,29 @@ const multerFilter = (req, file, cb) => {
     );
   }
 };
+//Using the multer object to upload
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
+//setting the upload for multiple file and types
 exports.uploadRevieMedia = upload.fields([
   { name: 'images', maxCount: 3 },
   { name: 'video', maxCount: 1 },
 ]);
 
+/**
+ * A middleware to Set user id when user is logged in
+ * from currrent user and user data not in the req.body
+ */
 exports.setUserId = (req, res, next) => {
   //Allow nested route
   if (!req.body.user) req.body.user = req.user.id;
   next();
 };
 
+/**
+ * A middleware to save the uploaded media i.e video or image to
+ * the review collections
+ */
 exports.saveMediaToDB = (req, res, next) => {
   if (req.files === undefined) return next();
 
@@ -95,7 +117,6 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReview = catchAsync(async (req, res, next) => {
-  //console.log('BODY', req.body);
   const review = await Review.findByIdAndUpdate(req.params.reviewId, req.body, {
     new: true,
     runValidators: true,
@@ -125,24 +146,14 @@ exports.getReview = catchAsync(async (req, res, next) => {
 });
 
 exports.markHelpFul = catchAsync(async (req, res, next) => {
-  if (
-    req.body.review ||
-    req.body.rating ||
-    req.body.category ||
-    req.body.apartmentAddresse
-  ) {
-    return next(
-      new AppError("Pls signup at '/signup' to provide more reviews", 403)
-    );
-  }
+  //Filtered out unwanted review data that are not allowed to be in the req.body
+  const filterdBody = filterObj1(req.body, 'helpful');
   let review = await Review.findByIdAndUpdate(
     req.params.reviewId,
-    {
-      helpful: req.body.helpful,
-    },
-
+    filterdBody,
     {
       new: true,
+      runValidators: true,
     }
   );
   if (!review) {
