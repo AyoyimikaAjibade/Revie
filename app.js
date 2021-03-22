@@ -8,6 +8,7 @@
  *  Last Modified: Gabriel <gabrielsonchia@gmail.com> <17/03/2021 06:59am>
  */
 
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -37,7 +38,7 @@ app.use(cors());
 app.options('*', cors());
 
 //Serving Static files
-// app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 /**
  * a middleware to log out request informations on the terminal with

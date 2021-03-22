@@ -51,22 +51,39 @@ const reviewSchema = new mongoose.Schema({
 
 reviewSchema.index({ createdAt: 1, helpfulCount: 1 });
 
+// assign a function to the "methods" object of our reviewSchema
+reviewSchema.methods.setHelpfulCount = function (cb) {
+  console.log('HELLO FROM INSTANCE METHODS!');
+
+  if (this.helpful === true) {
+    this.helpfulCount = ++this.helpfulCount;
+    // console.log(this.helpful);
+    // console.log(this.helpfulCount);
+    // console.log('true');
+  }
+  if (this.helpfulCount !== 0 && this.helpful === false) {
+    this.helpfulCount = --this.helpfulCount;
+    // console.log(this.helpful);
+    // console.log(this.helpfulCount);
+    // console.log('false');
+  }
+};
+
 reviewSchema.pre('save', function (next) {
-  console.log('HELLO FROM PRE SAVE!');
-  if (!this.isModified('helpful') || file.isNew('helpful')) return next();
-  console.log(this.helpful);
-  if (this.helpful === true) this.helpfulCount++;
-  else if (this.helpful === false) this.helpCount--;
+  this.setHelpfulCount();
   next();
 });
 
-reviewSchema.pre(/^find/, function (next) {
-  //console.log('HELLO FROM PRE find!');
-  const docToUpdate = this.getQuery().helpful;
-  //if (!this.isModified('helpful') || file.isNew('helpful')) return next();
-  console.log(docToUpdate);
-  // if (this.helpful === true) this.helpfulCount++;
-  // else if (this.helpful === false) this.helpCount--;
+reviewSchema.pre('findOneAndUpdate', async function (next) {
+  console.log('HELLO FROM PRE find!');
+  // The document that `findOneAndUpdate()` will modify
+  const docToUpdate = await this.model.findOne(this.getQuery());
+  //Another method of gaining access to the updated data before saving to database
+  //this.docToUpdate = await this.findOne();
+  // console.log('PRE', docToUpdate);
+  docToUpdate.setHelpfulCount();
+  //docToUpdate.save();
+  //console.log('POST', docToUpdate);
   next();
 });
 

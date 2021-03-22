@@ -98,6 +98,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
   //console.log('BODY', req.body);
   const review = await Review.findByIdAndUpdate(req.params.reviewId, req.body, {
     new: true,
+    runValidators: true,
   });
   if (!review) {
     return next(new AppError('No Review found with that ID', 404));
