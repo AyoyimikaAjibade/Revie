@@ -10,7 +10,7 @@
 const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const { filterObj1 } = require('./userController');
+const filter = require('./userController');
 const multer = require('multer');
 
 //Setting the multer storage path and dynamic filename when succesfully uploaded
@@ -147,7 +147,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
 
 exports.markHelpFul = catchAsync(async (req, res, next) => {
   //Filtered out unwanted review data that are not allowed to be in the req.body
-  const filterdBody = filterObj1(req.body, 'helpful');
+  const filterdBody = filter.filterObj(req.body, 'helpful');
   let review = await Review.findByIdAndUpdate(
     req.params.reviewId,
     filterdBody,

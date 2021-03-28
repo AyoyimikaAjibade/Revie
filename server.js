@@ -12,7 +12,6 @@ const dotenv = require('dotenv');
 
 // log error to the console for debugging purpose
 process.on('uncaughtException', (err) => {
-  console.log(err);
   console.log('UNCAUGHT EXCEPTION! 💥Shutting down...');
   console.log(err.name, err.message);
 });
@@ -52,9 +51,8 @@ const server = app.listen(port, () => {
 
 // log error to the console for debugging purpose
 process.on('unhandledRejection', (err) => {
-  console.log(err);
-  //console.log(err.name, err.message);
   console.log('UNHANDLED REJECTION! 💥Shutting down...');
+  console.log(err.name, err.message);
   server.close(() => {
     process.exit(1);
   });

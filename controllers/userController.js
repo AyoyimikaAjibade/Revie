@@ -36,14 +36,7 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
-exports.filterObj1 = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-const filterObj = (obj, ...allowedFields) => {
+exports.filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -66,7 +59,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
   // 2) Filtered out unwanted user data that are not allowed to be in the req.body
-  const filterdBody = filterObj(req.body, 'name', 'email');
+  const filterdBody = exports.filterObj(req.body, 'name', 'email');
   if (req.file) filterdBody.photo = req.file.filename;
 
   // 3) Update user document
